@@ -1,0 +1,11 @@
+# new package version
+post_install() {
+    pkgver=${1%-*}
+    /opt/brother/scanner/brscan-skey/brscan-skey-${pkgver//_/-}.sh 0
+}
+
+# old package version
+pre_remove() {
+    pkgver=${1%-*}
+    /opt/brother/scanner/brscan-skey/brscan-skey-${pkgver//_/-}.sh R 
+}
