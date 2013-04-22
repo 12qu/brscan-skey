@@ -10,7 +10,9 @@ _EOF_
 
 pre_upgrade() {
     oldpkgver=${2%-*}
-    /opt/brother/scanner/brscan-skey/brscan-skey-${oldpkgver//_/-}.sh R 
+    brscript=/opt/brother/scanner/brscan-skey/brscan-skey-${oldpkgver//_/-}.sh
+    # brscript does not exist for older versions
+    test -f $brscript && $brscript R
 }
 
 post_upgrade() {
