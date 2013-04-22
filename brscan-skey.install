@@ -10,9 +10,15 @@ _EOF_
 
 pre_upgrade() {
     oldpkgver=${2%-*}
-    brscript=/opt/brother/scanner/brscan-skey/brscan-skey-${oldpkgver//_/-}.sh
-    # brscript does not exist for older versions
-    test -f $brscript && $brscript R
+    brbase=brscan-skey-${oldpkgver//_/-}.sh
+    # Older brother install scripts stored differently
+    oldbr=/usr/local/Brother/sane/$brbase
+    newbr=/opt/brother/scanner/brscan-skey/$brbase
+    if test -x $newbr; then
+        $newbr R
+    elif test -x $oldbr; then
+        $oldbr R
+    fi
 }
 
 post_upgrade() {
