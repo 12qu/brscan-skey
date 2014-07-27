@@ -2,5 +2,6 @@
 *.tar.xz
 *.rpm
 *.sw[op]
-src/
-pkg/
+/src/
+/pkg/
+/agree.html
