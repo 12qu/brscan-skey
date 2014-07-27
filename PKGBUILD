@@ -1,8 +1,7 @@
 pkgname=brscan-skey
 pkgver=0.2.4_1
-pkgrel=3
+pkgrel=4
 pkgdesc="Brother scan-key-tool"
-depends=('sane' 'sed')
 arch=('i686' 'x86_64')
 url="http://support.brother.com/g/s/id/linux/en"
 license=('GPL' 'custom:Brother commercial license')
@@ -14,12 +13,11 @@ else
     source=("http://pub.brother.com/pub/com/bsc/linux/dlf/${pkgname}-${pkgver/_/-}.i386.rpm")
     md5sums=('c6bc7a501f424541130a1b9a38b76493')
 fi
-
-build() {
-    mkdir -p "$srcdir"/usr/bin
-    ln -sf /opt/brother/scanner/brscan-skey/brscan-skey "$srcdir"/usr/bin/brscan-skey
-}
+source+=("brscan-skey.service")
+md5sums+=('9b9f324ab79f8ee772c0178a9835037e')
 
 package() {
-    cp -R "$srcdir"/{opt,usr} "$pkgdir"
+    cp -R "$srcdir"/opt "$pkgdir"
+    mkdir -p "$pkgdir"/usr/lib/systemd/system
+    cp "$srcdir"/brscan-skey.service "$pkgdir"/usr/lib/systemd/system
 }
