@@ -2,6 +2,8 @@
 Description=Brother scan-key-tool
 
 [Service]
+User=admin
+Group=users
 Type=forking
 ExecStart=/opt/brother/scanner/brscan-skey/brscan-skey
 ExecStop=/opt/brother/scanner/brscan-skey/brscan-skey --terminate

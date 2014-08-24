@@ -1,6 +1,6 @@
 pkgname=brscan-skey
 pkgver=0.2.4_1
-pkgrel=5
+pkgrel=6
 pkgdesc="Brother scan-key-tool"
 arch=('i686' 'x86_64')
 url="http://support.brother.com/g/s/id/linux/en"
@@ -14,7 +14,7 @@ else
     md5sums=('c6bc7a501f424541130a1b9a38b76493')
 fi
 source+=('brscan-skey.service' 'LICENSE.html')
-md5sums+=('9b9f324ab79f8ee772c0178a9835037e' 'bd06a5d28abb3b3a3a6a263567cbb78b')
+md5sums+=('de0dc0a99d220a5cbcee1fe92ca7d81f' 'bd06a5d28abb3b3a3a6a263567cbb78b')
 
 package() {
     cp -R "$srcdir"/opt "$pkgdir"
