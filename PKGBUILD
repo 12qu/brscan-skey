@@ -1,16 +1,16 @@
 pkgname=brscan-skey
 pkgver=0.2.4_1
-pkgrel=7
+pkgrel=8
 pkgdesc="Brother scan-key-tool"
 arch=('i686' 'x86_64')
 url="http://support.brother.com/g/s/id/linux/en"
 license=('custom:Brother')
 install=brscan-skey.install
 if [ $CARCH = 'x86_64' ]; then
-    source=("http://pub.brother.com/pub/com/bsc/linux/dlf/${pkgname}-${pkgver/_/-}.x86_64.rpm")
+    source=("http://www.brother.com/pub/bsc/linux/dlf/${pkgname}-${pkgver/_/-}.x86_64.rpm")
     md5sums=('9ad29a0ef9f8f4d6f742fb4293ee08a6')
 else
-    source=("http://pub.brother.com/pub/com/bsc/linux/dlf/${pkgname}-${pkgver/_/-}.i386.rpm")
+    source=("http://www.brother.com/pub/bsc/linux/dlf/${pkgname}-${pkgver/_/-}.i386.rpm")
     md5sums=('c6bc7a501f424541130a1b9a38b76493')
 fi
 source+=('brscan-skey.service' 'brscan-skey-user.service' 'LICENSE.html')
@@ -27,4 +27,7 @@ package() {
 
     install -d -m755 "$pkgdir"/usr/share/licenses/$pkgname
     install -D -m644 "$srcdir"/LICENSE.html "$pkgdir"/usr/share/licenses/$pkgname
+
+    install -d "$pkgdir"/srv
+    install -d -m 775 -o 289 -g 289 "$pkgdir"/srv/brscan-skey
 }
