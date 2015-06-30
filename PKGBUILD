@@ -5,6 +5,10 @@ pkgdesc="Brother scan-key-tool"
 arch=('i686' 'x86_64')
 url="http://support.brother.com/g/s/id/linux/en"
 license=('custom:Brother')
+optdepends=('sane: for all default scanning scripts'
+            'sendmail: for default "Scan to email" script'
+            'gimp: for default "Scan to image" script'
+            'cuneiform: for default "Scan to OCR" script')
 install=brscan-skey.install
 if [ $CARCH = 'x86_64' ]; then
     source=("http://www.brother.com/pub/bsc/linux/dlf/${pkgname}-${pkgver/_/-}.x86_64.rpm")
