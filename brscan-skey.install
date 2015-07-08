@@ -13,32 +13,24 @@ post_install() {
 }
 
 pre_upgrade() {
+    local oldpkgverrel=$2
     local oldpkgver=${2%-*}
 
-    local brbase=brscan-skey-${oldpkgver//_/-}.sh
-    # Older Brother install scripts stored differently
-    local oldbr=/usr/local/Brother/sane/$brbase
-    local newbr=/opt/brother/scanner/brscan-skey/$brbase
-
-    if [ -x $newbr ]; then
-        $newbr R
-    elif [ -x $oldbr ]; then
-        $oldbr R
+    if (( $(vercmp $oldpkgver 0.2.3) < 0 )); then
+      # Pre 0.2.3
+      /usr/local/Brother/sane/brscan-skey-${oldpkgver//_/-}.sh R
+    elif (( $(vercmp $oldpkgverrel 0.2.4_1-7) <= 0 )); then
+      # 0.2.4_1-7 and earlier
+      pre_remove $oldpkgverrel # Deletes brscan-skey user and group which had wrong UID and GID
+    else
+      /opt/brother/scanner/brscan-skey/brscan-skey-${oldpkgver//_/-}.sh R
     fi
 }
 
 post_upgrade() {
-    local newpkgver=${1%-*}
-    local oldpkgverrel=$2
+    local newpkgverrel=$1
 
-    post_install "$newpkgver"
-
-    # Correct issues from earlier releases
-    if (( $(vercmp $oldpkgverrel 0.2.4_1-7) <= 0 )); then
-      usermod -u 289 brscan-skey # Correct UID
-      groupmod -g 289 brscan-skey # Correct GID
-      usermod -d /srv/brscan-skey brscan-skey # /srv/brscan-skey as $HOME
-    fi 
+    post_install $newpkgverrel
 }
 
 pre_remove() {
