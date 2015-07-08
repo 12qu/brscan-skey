@@ -44,8 +44,8 @@ post_upgrade() {
 pre_remove() {
     local pkgver=${1%-*}
 
-    # Allow to fail since earlier releases did not have a brscan-skey.service file
-    systemctl stop brscan-skey.service || true
+    systemctl daemon-reload
+    systemctl --quiet is-active brscan-skey.service && systemctl stop brscan-skey.service
 
     getent passwd brscan-skey &> /dev/null && userdel brscan-skey
     getent group brscan-skey &> /dev/null && groupdel brscan-skey
